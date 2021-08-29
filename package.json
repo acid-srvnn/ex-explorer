@@ -31,11 +31,11 @@
 			},
 			{
 				"command": "ex-explorer.deletefile",
-				"title": "Delete File"
+				"title": "Delete"
 			},
 			{
 				"command": "ex-explorer.deletefolder",
-				"title": "Delete Folder"
+				"title": "Delete"
 			},
 			{
 				"command": "ex-explorer.revealinexplorer",
@@ -56,6 +56,18 @@
 					"light": "resources/icons/light/settings.svg",
 					"dark": "resources/icons/dark/settings.svg"
 				}
+			},
+			{
+				"command": "ex-explorer.addfile",
+				"title": "New File"
+			},
+			{
+				"command": "ex-explorer.addfolder",
+				"title": "New Folder"
+			},
+			{
+				"command": "ex-explorer.renamefile",
+				"title": "Rename"
 			}
 		],
 		"menus": {
@@ -73,25 +85,35 @@
 			],
 			"view/item/context": [
 				{
+					"command": "ex-explorer.addfile",
+					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFolderItem|ExplorerRootFolderItem/",
+					"group": "1_ex@1"
+				},
+				{
+					"command": "ex-explorer.addfolder",
+					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFolderItem|ExplorerRootFolderItem/",
+					"group": "1_ex@2"
+				},				
+				{
+					"command": "ex-explorer.renamefile",
+					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFileItem|ExplorerFolderItem/",
+					"group": "2_ex@1"
+				},
+				{
 					"command": "ex-explorer.deletefile",
 					"when": "view == ex-explorer-explorer && viewItem == ExplorerFileItem",
-					"group": "navigation"
+					"group": "2_ex@2"
 				},
 				{
 					"command": "ex-explorer.deletefolder",
 					"when": "view == ex-explorer-explorer && viewItem == ExplorerFolderItem",
-					"group": "navigation"
+					"group": "2_ex@2"
 				},
 				{
 					"command": "ex-explorer.revealinexplorer",
-					"when": "view == ex-explorer-explorer && viewItem == ExplorerFileItem",
-					"group": "navigation"
-				},
-				{
-					"command": "ex-explorer.revealinexplorer",
-					"when": "view == ex-explorer-explorer && viewItem == ExplorerFolderItem",
-					"group": "navigation"
-				}
+					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFileItem|ExplorerFolderItem|ExplorerRootFolderItem/",
+					"group": "3_ex@1"
+				}				
 			]
 		},
 		"viewsContainers": {

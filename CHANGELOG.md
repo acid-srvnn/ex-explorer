@@ -1,5 +1,10 @@
 # Change Log
 
+### 1.1.0
+
+* Added support - New File / Folder
+* Added support - Rename File / Folder
+
 ### 1.0.0
 
 * Release 1.0.0

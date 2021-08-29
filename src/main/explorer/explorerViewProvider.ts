@@ -38,8 +38,11 @@ export class ExplorerViewProvider implements vscode.TreeDataProvider<vscode.Tree
                     }else if (!fs.lstatSync( fullpath + "/" + a).isDirectory() && fs.lstatSync( fullpath + "/" + b).isDirectory()) {
                         return -100;
                     } else{
-                        return fs.statSync( fullpath + "/" + b).mtime.getTime() - 
-                        fs.statSync( fullpath + "/" + a).mtime.getTime();
+                        if(a>b){
+                            return 100;
+                        }else{
+                            return -100;
+                        }
                     }             
 
                 });
