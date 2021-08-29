@@ -2,7 +2,7 @@
 	"name": "ex-explorer",
 	"displayName": "extra-explorer",
 	"description": "An Extra Explorer",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"publisher": "acid-srvnn",
 	"author": {
 		"name": "acid-srvnn",
@@ -93,7 +93,7 @@
 					"command": "ex-explorer.addfolder",
 					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFolderItem|ExplorerRootFolderItem/",
 					"group": "1_ex@2"
-				},				
+				},
 				{
 					"command": "ex-explorer.renamefile",
 					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFileItem|ExplorerFolderItem/",
@@ -113,7 +113,7 @@
 					"command": "ex-explorer.revealinexplorer",
 					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFileItem|ExplorerFolderItem|ExplorerRootFolderItem/",
 					"group": "3_ex@1"
-				}				
+				}
 			]
 		},
 		"viewsContainers": {
