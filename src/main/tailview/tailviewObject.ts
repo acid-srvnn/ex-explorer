@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 import { Config } from '../config';
 import { DocContentProvider } from '../docs/docContentProvider';
 import { TailviewHandler } from './tailviewHandler';
+import { debounce } from 'lodash';
+import * as fs from 'fs';
+import * as rd from 'readline';
 const Tail = require('tail-file');
 
 export class TailviewObject {
@@ -17,9 +20,29 @@ export class TailviewObject {
     document: vscode.TextDocument|null = null; 
     documentProvider: DocContentProvider|null = null;
 
+    handleRefreshEvent: any;
+    
     constructor(
         public readonly fullpath: string,
     ) {
+
+        Config.logger.log("new tailview object - " + fullpath);
+
+        this.handleRefreshEvent = debounce(this.informRefresh, 1000);
+
+        Config.logger.log("reading existing content - " + fullpath);
+        var reader = rd.createInterface(fs.createReadStream(fullpath));
+        reader.on("line", (line: string) => {
+            if(this.lines.length >= this.lineMaxCount){
+                this.lines.shift();
+            }
+            this.lines.push(line);
+        });
+        if(this.documentProvider != null && this.document != null){
+            this.handleRefreshEvent(this.document.uri);
+        }
+        Config.logger.log("reading existing content done - " + fullpath);
+
 
         this.status = "adding";        
         Config.logger.log("tail adding - " + fullpath);
@@ -41,7 +64,8 @@ export class TailviewObject {
             this.lines.push(line);            
             //Config.logger.log("full file - "+this.lines);
             if(this.documentProvider != null && this.document != null){
-                this.documentProvider.refreshUI(this.document.uri);
+                //this.documentProvider.refreshUI(this.document.uri);
+                this.handleRefreshEvent(this.document.uri);
             }
         });
 
@@ -78,6 +102,10 @@ export class TailviewObject {
             this.document = doc;
         });
 
+    }
+
+    informRefresh (uri: vscode.Uri) {
+        this.documentProvider?.refreshUI(uri);
     }
 
 }

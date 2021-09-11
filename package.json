@@ -225,7 +225,6 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
-		"@types/rimraf": "2.0.2",
 		"@types/vscode": "^1.40.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
@@ -239,6 +238,7 @@
 		"@types/rimraf": "2.0.2",
 		"debounce": "1.2.1",
 		"rimraf": "^3.0.2",
-		"tail-file": "1.4.14"
+		"tail-file": "1.4.14",
+		"@types/lodash": "^4.14.172"
 	}
 }

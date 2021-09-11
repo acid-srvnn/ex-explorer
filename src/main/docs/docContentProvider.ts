@@ -1,8 +1,7 @@
-import { resolve } from 'path';
+import { setFlagsFromString } from 'v8';
 import * as vscode from 'vscode';
 import { Config } from '../config';
 import { TailviewHandler } from '../tailview/tailviewHandler';
-var debounce = require('debounce');
 
 export class DocContentProvider implements vscode.TextDocumentContentProvider {
 
@@ -16,9 +15,6 @@ export class DocContentProvider implements vscode.TextDocumentContentProvider {
     onDidChange = this.onDidChangeEmitter.event;
     lastRefresh : number = 0;
     needToRefresh : boolean = false;
-
-    debfn : function | null = null;
-    
 
     query(queryString: string, key: string): string {
         const queries = queryString.split("&");
@@ -40,7 +36,7 @@ export class DocContentProvider implements vscode.TextDocumentContentProvider {
             if(tailviewObject != null){
                 tailviewObject.documentProvider = this;
                 let ret = tailviewObject.lines.join("\n");
-                Config.logger.log("Sending - " + ret);
+                Config.logger.log("Sending doc content - " + ret);
                 resolve(ret);
             }else{
                 resolve("Invalid Request");
@@ -49,13 +45,7 @@ export class DocContentProvider implements vscode.TextDocumentContentProvider {
     }
 
     refreshUI(uri: vscode.Uri) {
-        if(this.debfn == null) {
-            this.debfn = debounce(function(){
-                self.onDidChangeEmitter.fire(uri);
-            }, 1000);
-        }
-        
-        newfn();
+        this.onDidChangeEmitter.fire(uri);
     }    
     
 };
