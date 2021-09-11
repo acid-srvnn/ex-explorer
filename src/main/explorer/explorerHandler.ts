@@ -6,6 +6,7 @@ import * as rimraf from 'rimraf';
 import path = require('path');
 import * as fs from 'fs';
 import { ExplorerFileItem } from './explorerFileItem';
+import { TailviewHandler } from '../tailview/tailviewHandler';
 
 export class ExplorerHandler {
 
@@ -77,6 +78,10 @@ export class ExplorerHandler {
             const new_path = path.join(parseUrl.dir, name!);
             fs.renameSync(args.fullpath, new_path);
             ViewProviders.explorerViewProvider.refreshUI();
+        }));
+
+        context.subscriptions.push(vscode.commands.registerCommand('ex-explorer.tailfile', async (args: ExplorerFileItem) => {
+            TailviewHandler.addToTailList(args.fullpath);
         }));
     }
 
