@@ -1,4 +1,3 @@
-import { setFlagsFromString } from 'v8';
 import * as vscode from 'vscode';
 import { Config } from '../config';
 import { TailviewHandler } from '../tailview/tailviewHandler';
@@ -13,9 +12,7 @@ export class DocContentProvider implements vscode.TextDocumentContentProvider {
 
     onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
     onDidChange = this.onDidChangeEmitter.event;
-    lastRefresh : number = 0;
-    needToRefresh : boolean = false;
-
+    
     query(queryString: string, key: string): string {
         const queries = queryString.split("&");
         for (var i = 0; i < queries.length; i++) {
@@ -36,7 +33,7 @@ export class DocContentProvider implements vscode.TextDocumentContentProvider {
             if(tailviewObject != null){
                 tailviewObject.documentProvider = this;
                 let ret = tailviewObject.lines.join("\n");
-                Config.logger.log("Sending doc content - " + ret);
+                Config.logger.log("Sending doc content");
                 resolve(ret);
             }else{
                 resolve("Invalid Request");

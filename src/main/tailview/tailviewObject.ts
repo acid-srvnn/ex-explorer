@@ -57,7 +57,7 @@ export class TailviewObject {
         });
 
         mytail.on('line', (line: any) => {
-            Config.logger.log("tail line - "+line);
+            //Config.logger.log("tail line - "+line);
             if(this.lines.length >= this.lineMaxCount){
                 this.lines.shift();
             }
@@ -97,7 +97,7 @@ export class TailviewObject {
         this.tail = mytail;
 
         //let uri = vscode.Uri.parse("extailview:" + fullpath.replace(/.*(\\|\/)/,"") + '?fullPath=' + fullpath);
-        let uri = vscode.Uri.parse("extailview:" + "TailView" + '?fullPath=' + fullpath);
+        let uri = vscode.Uri.parse("extailview:" + "TailView-" + fullpath.replace(/.*(\\|\/)/,"") + '?fullPath=' + fullpath);
         vscode.workspace.openTextDocument(uri).then( doc => {
             this.document = doc;
         });
