@@ -30,6 +30,10 @@
 				"title": "Open File"
 			},
 			{
+				"command": "ex-explorer.opentailfile",
+				"title": "Open Tail File"
+			},
+			{
 				"command": "ex-explorer.deletefile",
 				"title": "Delete"
 			},
@@ -68,6 +72,14 @@
 			{
 				"command": "ex-explorer.renamefile",
 				"title": "Rename"
+			},
+			{
+				"command": "ex-explorer.tailfile",
+				"title": "Tail this file"
+			},
+			{
+				"command": "ex-explorer.stoptailfile",
+				"title": "Stop tailing"
 			}
 		],
 		"menus": {
@@ -110,9 +122,19 @@
 					"group": "2_ex@2"
 				},
 				{
+					"command": "ex-explorer.tailfile",
+					"when": "view == ex-explorer-explorer && viewItem == ExplorerFileItem",
+					"group": "3_ex@1"
+				},
+				{
+					"command": "ex-explorer.stoptailfile",
+					"when": "view == ex-explorer-tailview && viewItem == TailFileItem",
+					"group": "1_ex@1"
+				},
+				{
 					"command": "ex-explorer.revealinexplorer",
 					"when": "view == ex-explorer-explorer && viewItem =~ /ExplorerFileItem|ExplorerFolderItem|ExplorerRootFolderItem/",
-					"group": "3_ex@1"
+					"group": "3_ex@2"
 				}
 			]
 		},
@@ -130,6 +152,10 @@
 				{
 					"id": "ex-explorer-explorer",
 					"name": "Explorer"
+				},
+				{
+					"id": "ex-explorer-tailview",
+					"name": "Tail View (Beta)"
 				}
 			]
 		},
@@ -196,14 +222,13 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.40.0",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
-		"@types/rimraf": "2.0.2",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.30.0",
+		"@types/vscode": "^1.40.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
+		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.1.2",
 		"typescript": "^3.8.3",
@@ -211,6 +236,9 @@
 	},
 	"dependencies": {
 		"@types/rimraf": "2.0.2",
-		"rimraf": "^3.0.2"
+		"debounce": "1.2.1",
+		"rimraf": "^3.0.2",
+		"tail-file": "1.4.14",
+		"@types/lodash": "^4.14.172"
 	}
 }
