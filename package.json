@@ -130,6 +130,10 @@
 				{
 					"id": "ex-explorer-explorer",
 					"name": "Explorer"
+				},
+				{
+					"id": "ex-explorer-favprojs",
+					"name": "Favourite Projects"
 				}
 			]
 		},

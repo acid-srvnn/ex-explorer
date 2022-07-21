@@ -20,6 +20,7 @@ export class ExplorerHandler {
         context.subscriptions.push(vscode.commands.registerCommand('ex-explorer.refreshConfig', async () => {
             Config.loadConfig();
             ViewProviders.explorerViewProvider.refreshUI();
+            ViewProviders.favprojsViewProvider.refreshUI();
         }));
 
         context.subscriptions.push(vscode.commands.registerCommand('ex-explorer.openmysettings', async () => {
