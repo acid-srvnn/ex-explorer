@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.2.0
+
+* Feature - Store and quick open favourite VsCode projects
+
 ### 1.1.0
 
 * Added support - New File / Folder
