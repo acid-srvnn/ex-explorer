@@ -79,6 +79,27 @@ export class Config {
                             favProjGroupProj.name = favProjGroupProjTemp.name;
                         }
                         if(favProjGroupProjTemp.path){
+
+                            this.logger.log('a '+ favProjGroupProjTemp.path);
+
+                            let res = regex.exec(favProjGroupProjTemp.path);
+                            if(res !== null){
+                                let res0 = res[1];
+                                let res1 = res[2];
+                                this.logger.log('path has workspacename : '+res0+' : '+res1);
+                                if(vscode.workspace.workspaceFolders){
+                                    vscode.workspace.workspaceFolders.forEach((wkFolder) => {
+                                        this.logger.log(wkFolder.name);
+                                        if(wkFolder.name === res0){
+                                            this.logger.log('found workspace');
+                                            favProjGroupProjTemp.path = wkFolder.uri.fsPath + res1 ;
+                                        }
+                                    });
+                                }
+                            }
+
+                            this.logger.log('b '+ favProjGroupProjTemp.path);
+
                             favProjGroupProj.path = favProjGroupProjTemp.path;
                         }
                         favProjGroup.projs.push(favProjGroupProj);
