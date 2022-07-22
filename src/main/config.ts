@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { FavProj, FavProjGroup } from './favprojs/favprojModels';
 import { Logger } from './logger';
 
 export class Config {
@@ -10,6 +11,7 @@ export class Config {
     private static conf_path: Array<string> = ["."];
     private static conf_ignore_pattern: Array<string> = [];
     private static conf_post_open_actions : Array<PostOpenAction> = [];
+    private static conf_favprojs: Array<FavProjGroup> = [];
 
     public static loadConfig() {
         this.logger.log("Loading Config");
@@ -59,6 +61,54 @@ export class Config {
             Config.conf_post_open_actions = conf.postOpenActions;
         }
 
+        if(conf.favProjs) {
+            let favProjGroupsTemp = conf.favProjs;
+            Config.conf_favprojs = [];
+            for(var i=0;i<favProjGroupsTemp.length;i++){
+                let favProjGroupTemp = favProjGroupsTemp[i];
+                let favProjGroup:FavProjGroup = {name:'temp',projs:[]};
+                if(favProjGroupTemp.name){
+                    favProjGroup.name = favProjGroupTemp.name;
+                }
+                if(favProjGroupTemp.projs){
+                    let favProjGroupProjs = favProjGroupTemp.projs;
+                    for(var j=0;j<favProjGroupProjs.length;j++){
+                        let favProjGroupProjTemp = favProjGroupProjs[j];
+                        let favProjGroupProj:FavProj = {name:'temp',path:'.'};
+                        if(favProjGroupProjTemp.name){
+                            favProjGroupProj.name = favProjGroupProjTemp.name;
+                        }
+                        if(favProjGroupProjTemp.path){
+
+                            this.logger.log('a '+ favProjGroupProjTemp.path);
+
+                            let res = regex.exec(favProjGroupProjTemp.path);
+                            if(res !== null){
+                                let res0 = res[1];
+                                let res1 = res[2];
+                                this.logger.log('path has workspacename : '+res0+' : '+res1);
+                                if(vscode.workspace.workspaceFolders){
+                                    vscode.workspace.workspaceFolders.forEach((wkFolder) => {
+                                        this.logger.log(wkFolder.name);
+                                        if(wkFolder.name === res0){
+                                            this.logger.log('found workspace');
+                                            favProjGroupProjTemp.path = wkFolder.uri.fsPath + res1 ;
+                                        }
+                                    });
+                                }
+                            }
+
+                            this.logger.log('b '+ favProjGroupProjTemp.path);
+
+                            favProjGroupProj.path = favProjGroupProjTemp.path;
+                        }
+                        favProjGroup.projs.push(favProjGroupProj);
+                    }
+                }
+                Config.conf_favprojs.push(favProjGroup);
+            }
+        }
+
         this.logger.log("Loading Config - Completed");
     }
 
@@ -72,6 +122,10 @@ export class Config {
 
     public static get_conf_post_open_actions() {
         return Config.conf_post_open_actions;
+    }
+
+    public static get_conf_favprojs() {
+        return Config.conf_favprojs;
     }
 
 }
