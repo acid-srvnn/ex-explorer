@@ -154,6 +154,32 @@
 						"type": "string"
 					}
 				},
+				"ex-explorer.favProjs": {
+					"type": "array",
+					"description": "Favourite VsCode Projects",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name" : {
+								"type" : "string"
+							},
+							"projs" : {
+								"type" : "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name" : {
+											"type" : "string"
+										},
+										"path" : {
+											"type" : "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
 				"ex-explorer.postOpenActions": {
 					"type": "array",
 					"items": {
