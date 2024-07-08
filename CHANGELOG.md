@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.2.1
+
+* Added support - Path start with ~
+
 ### 1.2.0
 
 * Feature - Store and quick open favourite VsCode projects
