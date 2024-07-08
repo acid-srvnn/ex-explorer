@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { FavProj, FavProjGroup } from './favprojs/favprojModels';
 import { Logger } from './logger';
+import path = require('path');
+const os = require('os');
 
 export class Config {
 
@@ -48,6 +50,11 @@ export class Config {
                         }
                     });
                 }
+            }
+
+            if (Config.conf_path[i].startsWith('~')) {
+                this.logger.log('path has ~ : '+os.homedir());
+                Config.conf_path[i] = path.join(os.homedir(), Config.conf_path[i].slice(1));
             }
 
             this.logger.log('b '+Config.conf_path[i]);
